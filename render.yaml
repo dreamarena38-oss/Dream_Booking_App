@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: dream-arena-backend
+    env: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 18.0.0
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        fromContext: true
+      - key: JWT_SECRET
+        fromContext: true
