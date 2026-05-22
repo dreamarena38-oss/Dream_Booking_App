@@ -2,7 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { Alert, Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-
+import { API_BASE_URL } from '../config/env';
 
 const AuthContext = createContext();
 
@@ -142,9 +142,6 @@ export const AuthProvider = ({ children }) => {
     message: '',
     buttons: null,
   });
-
-  const API_BASE_URL = 'https://dream-booking-backend-1.onrender.com/api';
-
 
   // Setup Axios interceptors
   useEffect(() => {

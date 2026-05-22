@@ -2,31 +2,67 @@
   "expo": {
     "name": "Dream Arena",
     "slug": "dream-arena-football",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/adaptive-icon.png",
+    "icon": "./assets/icon.png",
+    "scheme": "dreamarena",
     "userInterfaceStyle": "dark",
+    "jsEngine": "hermes",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#0d2818"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.saimashraf.dreamarena",
+      "buildNumber": "2",
+      "infoPlist": {
+        "NSLocalNetworkUsageDescription": "Dream Arena needs access to your local network to load the app from the development server while debugging on your device.",
+        "NSBonjourServices": [
+          "_expo._tcp",
+          "_metro._tcp",
+          "_http._tcp"
+        ],
+        "NSPhotoLibraryUsageDescription": "Dream Arena uses your photo library so you can choose a profile picture and upload ground images.",
+        "NSPhotoLibraryAddUsageDescription": "Dream Arena saves images you choose for your profile and listings.",
+        "NSCameraUsageDescription": "Dream Arena uses the camera so you can take a profile or ground photo.",
+        "NSMicrophoneUsageDescription": "Dream Arena may use the microphone when playing video with sound.",
+        "ITSAppUsesNonExemptEncryption": false,
+        "UIViewControllerBasedStatusBarAppearance": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0d2818"
       },
-      "package": "com.mani0908.dreamarenafootball"
+      "package": "com.saimashraf.dreamarena",
+      "versionCode": 2
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/adaptive-icon.png"
     },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Dream Arena uses your photos so you can choose a profile picture and upload ground images.",
+          "cameraPermission": "Dream Arena uses the camera so you can take a profile or ground photo."
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash.png",
+          "resizeMode": "cover",
+          "backgroundColor": "#0d2818"
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "18cda882-9267-40f4-a293-4f9f1eb9439e"
