@@ -44,6 +44,7 @@ import GroundDetailScreen from './src/screens/GroundDetailScreen';
 import AdminDashboard from './src/screens/AdminDashboard';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
 import HelpSupportScreen from './src/screens/HelpSupportScreen';
+import BookingScreen from './src/screens/BookingScreen';
 
 // Prevent splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();
@@ -120,6 +121,11 @@ function AppNavigator() {
         >
           {!user ? (
             <>
+              <Stack.Screen 
+                name="Guest" 
+                component={BookingScreen} 
+                options={{ headerShown: false }}
+              />
               <Stack.Screen 
                 name="Login" 
                 component={LoginScreen} 
