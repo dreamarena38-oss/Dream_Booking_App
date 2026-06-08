@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
@@ -8,34 +8,61 @@ import {
   ScrollView,
   Alert,
   ImageBackground,
-} from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { useAuth } from '../context/AuthContext';
+} from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../context/AuthContext";
 
 export default function ProfileScreen() {
   const navigation = useNavigation();
-  const { user, logout, updateProfile } = useAuth();
+  const { user, logout, updateProfile, deleteAccount } = useAuth();
 
   const handleLogout = () => {
+    Alert.alert("Logout", "Are you sure you want to logout?", [
+      { text: "Cancel", style: "cancel" },
+      { text: "Logout", style: "destructive", onPress: logout },
+    ]);
+  };
+
+  const handleDeleteAccount = () => {
     Alert.alert(
-      'Logout',
-      'Are you sure you want to logout?',
+      "Delete Account",
+      "Are you sure you want to delete your account?",
       [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Logout', style: 'destructive', onPress: logout }
-      ]
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: async () => {
+            const delResult = await deleteAccount(user?.id);
+            if (delResult.success) {
+              Alert.alert("Success", "Account deleted successfully!", [
+                { text: "OK", style: "destructive", onPress: logout },
+              ]);
+            } else {
+              Alert.alert(
+                "Error",
+                delResult.error || "Failed to delete account",
+              );
+            }
+          },
+        },
+      ],
     );
   };
 
   const handleImagePicker = async () => {
     try {
       // Request permission
-      const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      const permissionResult =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
 
       if (permissionResult.granted === false) {
-        Alert.alert('Permission Required', 'Permission to access camera roll is required!');
+        Alert.alert(
+          "Permission Required",
+          "Permission to access camera roll is required!",
+        );
         return;
       }
 
@@ -56,37 +83,42 @@ export default function ProfileScreen() {
         const updateResult = await updateProfile({ profileImage: base64Image });
 
         if (updateResult.success) {
-          Alert.alert('Success', 'Profile photo updated successfully!');
+          Alert.alert("Success", "Profile photo updated successfully!");
         } else {
-          Alert.alert('Error', updateResult.error || 'Failed to update profile photo');
+          Alert.alert(
+            "Error",
+            updateResult.error || "Failed to update profile photo",
+          );
         }
       }
     } catch (error) {
-      console.error('Error updating profile photo:', error);
-      Alert.alert('Error', 'Failed to update profile photo. Please try again.');
+      console.error("Error updating profile photo:", error);
+      Alert.alert("Error", "Failed to update profile photo. Please try again.");
     }
   };
 
   const getPositionIcon = (position) => {
     switch (position?.toLowerCase()) {
-      case 'goalkeeper':
-        return 'shield-outline';
-      case 'defender':
-      case 'center back':
-      case 'full back':
-        return 'shield-checkmark-outline';
-      case 'midfielder':
-      case 'attacking midfielder':
-      case 'defensive midfielder':
-        return 'ellipse-outline';
-      case 'forward':
-      case 'striker':
-      case 'winger':
-        return 'arrow-up-outline';
+      case "goalkeeper":
+        return "shield-outline";
+      case "defender":
+      case "center back":
+      case "full back":
+        return "shield-checkmark-outline";
+      case "midfielder":
+      case "attacking midfielder":
+      case "defensive midfielder":
+        return "ellipse-outline";
+      case "forward":
+      case "striker":
+      case "winger":
+        return "arrow-up-outline";
       default:
-        return 'football-outline';
+        return "football-outline";
     }
   };
+
+  console.log("User data in ProfileScreen:", user);
 
   return (
     <View style={styles.container}>
@@ -95,11 +127,16 @@ export default function ProfileScreen() {
           <View style={styles.profileImageContainer}>
             <Image
               source={{
-                uri: user?.profileImage || 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg'
+                uri:
+                  user?.profileImage ||
+                  "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg",
               }}
               style={styles.profileImage}
             />
-            <TouchableOpacity style={styles.editImageButton} onPress={handleImagePicker}>
+            <TouchableOpacity
+              style={styles.editImageButton}
+              onPress={handleImagePicker}
+            >
               <Ionicons name="camera" size={16} color="#000" />
             </TouchableOpacity>
           </View>
@@ -116,19 +153,25 @@ export default function ProfileScreen() {
               color="#ffd700"
             />
             <Text style={styles.statLabel}>Position</Text>
-            <Text style={styles.statValue}>{user?.position || 'Not specified'}</Text>
+            <Text style={styles.statValue}>
+              {user?.position || "Not specified"}
+            </Text>
           </View>
 
           <View style={styles.statItem}>
             <Ionicons name="resize-outline" size={24} color="#ffd700" />
             <Text style={styles.statLabel}>Height</Text>
-            <Text style={styles.statValue}>{user?.height ? `${user.height} cm` : 'Not specified'}</Text>
+            <Text style={styles.statValue}>
+              {user?.height ? `${user.height} cm` : "Not specified"}
+            </Text>
           </View>
 
           <View style={styles.statItem}>
             <Ionicons name="people-outline" size={24} color="#ffd700" />
             <Text style={styles.statLabel}>Team</Text>
-            <Text style={styles.statValue}>{user?.teamId?.name || 'No team'}</Text>
+            <Text style={styles.statValue}>
+              {user?.teamId?.name || "No team"}
+            </Text>
           </View>
         </View>
 
@@ -139,27 +182,37 @@ export default function ProfileScreen() {
               <View style={styles.teamHeader}>
                 <Image
                   source={{
-                    uri: user.teamId.logo || 'https://images.pexels.com/photos/274506/pexels-photo-274506.jpeg'
+                    uri:
+                      user.teamId.logo ||
+                      "https://images.pexels.com/photos/274506/pexels-photo-274506.jpeg",
                   }}
                   style={styles.teamLogo}
                 />
                 <View style={styles.teamInfo}>
                   <Text style={styles.teamName}>{user.teamId.name}</Text>
-                  <Text style={styles.teamCaptain}>Captain: {user.teamId.captain}</Text>
+                  <Text style={styles.teamCaptain}>
+                    Captain: {user.teamId.captain}
+                  </Text>
                 </View>
               </View>
 
               <View style={styles.teamStats}>
                 <View style={styles.teamStatItem}>
-                  <Text style={styles.teamStatValue}>{user.teamId.players?.length || 0}</Text>
+                  <Text style={styles.teamStatValue}>
+                    {user.teamId.players?.length || 0}
+                  </Text>
                   <Text style={styles.teamStatLabel}>Players</Text>
                 </View>
                 <View style={styles.teamStatItem}>
-                  <Text style={styles.teamStatValue}>{user.teamId.matchesPlayed || 0}</Text>
+                  <Text style={styles.teamStatValue}>
+                    {user.teamId.matchesPlayed || 0}
+                  </Text>
                   <Text style={styles.teamStatLabel}>Matches</Text>
                 </View>
                 <View style={styles.teamStatItem}>
-                  <Text style={styles.teamStatValue}>{user.teamId.wins || 0}</Text>
+                  <Text style={styles.teamStatValue}>
+                    {user.teamId.wins || 0}
+                  </Text>
                   <Text style={styles.teamStatLabel}>Wins</Text>
                 </View>
               </View>
@@ -171,24 +224,29 @@ export default function ProfileScreen() {
           <Text style={styles.sectionTitle}>Account</Text>
 
           <ImageBackground
-            source={require('./vector.png')}
+            source={require("./vector.png")}
             style={styles.menuItem}
             imageStyle={styles.buttonImage}
           >
-            <TouchableOpacity style={styles.menuTouchable} onPress={() => navigation.navigate('DetailedProfile')}>
+            <TouchableOpacity
+              style={styles.menuTouchable}
+              onPress={() => navigation.navigate("DetailedProfile")}
+            >
               <Ionicons name="person-outline" size={20} color="#ffd700" />
               <Text style={styles.menuText}>View Profile</Text>
               <Ionicons name="chevron-forward" size={20} color="#ffd700" />
             </TouchableOpacity>
           </ImageBackground>
 
-
           <ImageBackground
-            source={require('./vector.png')}
+            source={require("./vector.png")}
             style={styles.menuItem}
             imageStyle={styles.buttonImage}
           >
-            <TouchableOpacity style={styles.menuTouchable} onPress={() => navigation.navigate('BookingsHistory')}>
+            <TouchableOpacity
+              style={styles.menuTouchable}
+              onPress={() => navigation.navigate("BookingsHistory")}
+            >
               <Ionicons name="calendar-outline" size={20} color="#ffd700" />
               <Text style={styles.menuText}>My Bookings</Text>
               <Ionicons name="chevron-forward" size={20} color="#ffd700" />
@@ -196,11 +254,14 @@ export default function ProfileScreen() {
           </ImageBackground>
 
           <ImageBackground
-            source={require('./vector.png')}
+            source={require("./vector.png")}
             style={styles.menuItem}
             imageStyle={styles.buttonImage}
           >
-            <TouchableOpacity style={styles.menuTouchable} onPress={() => navigation.navigate('HelpSupportScreen')}>
+            <TouchableOpacity
+              style={styles.menuTouchable}
+              onPress={() => navigation.navigate("HelpSupportScreen")}
+            >
               <Ionicons name="help-circle-outline" size={20} color="#ffd700" />
               <Text style={styles.menuText}>Help & Support</Text>
               <Ionicons name="chevron-forward" size={20} color="#ffd700" />
@@ -208,11 +269,14 @@ export default function ProfileScreen() {
           </ImageBackground>
 
           <ImageBackground
-            source={require('./vector.png')}
+            source={require("./vector.png")}
             style={styles.menuItem}
             imageStyle={styles.buttonImage}
           >
-            <TouchableOpacity style={styles.menuTouchable} onPress={() => navigation.navigate('SettingsScreen')}>
+            <TouchableOpacity
+              style={styles.menuTouchable}
+              onPress={() => navigation.navigate("SettingsScreen")}
+            >
               <Ionicons name="settings-outline" size={20} color="#ffd700" />
               <Text style={styles.menuText}>Settings</Text>
               <Ionicons name="chevron-forward" size={20} color="#ffd700" />
@@ -224,6 +288,14 @@ export default function ProfileScreen() {
           <Ionicons name="log-out-outline" size={20} color="#fff" />
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.logoutButton}
+          onPress={handleDeleteAccount}
+        >
+          <Ionicons name="trash-outline" size={20} color="#fff" />
+          <Text style={styles.logoutText}>Delete Account</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -232,15 +304,15 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0d2818',
+    backgroundColor: "#0d2818",
   },
   header: {
-    alignItems: 'center',
+    alignItems: "center",
     padding: 30,
-    backgroundColor: '000',
+    backgroundColor: "000",
   },
   profileImageContainer: {
-    position: 'relative',
+    position: "relative",
     marginBottom: 15,
   },
   profileImage: {
@@ -248,73 +320,73 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     borderWidth: 3,
-    borderColor: '#ffd700',
+    borderColor: "#ffd700",
   },
   editImageButton: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     right: 0,
-    backgroundColor: '#ffd700',
+    backgroundColor: "#ffd700",
     borderRadius: 15,
     width: 30,
     height: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   userName: {
     fontSize: 24,
-    fontFamily: 'Sportypo-Regular',
-    color: '#fff',
+    fontFamily: "Sportypo-Regular",
+    color: "#fff",
     marginBottom: 5,
     letterSpacing: 1.5,
   },
   userEmail: {
     fontSize: 14,
-    fontFamily: 'LemonMilk-Regular',
-    color: '#888',
+    fontFamily: "LemonMilk-Regular",
+    color: "#888",
   },
   statsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     padding: 20,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     marginTop: 1,
   },
   statItem: {
-    alignItems: 'center',
+    alignItems: "center",
     flex: 1,
   },
   statLabel: {
-    color: '#888',
+    color: "#888",
     fontSize: 12,
-    fontFamily: 'LemonMilk-Regular',
+    fontFamily: "LemonMilk-Regular",
     marginTop: 5,
   },
   statValue: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 14,
-    fontFamily: 'LemonMilk-Regular',
+    fontFamily: "LemonMilk-Regular",
     marginTop: 2,
-    textAlign: 'center',
+    textAlign: "center",
   },
   teamSection: {
     padding: 20,
   },
   sectionTitle: {
     fontSize: 18,
-    fontFamily: 'Sportypo-Regular',
-    color: '#ffd700',
+    fontFamily: "Sportypo-Regular",
+    color: "#ffd700",
     marginBottom: 15,
     letterSpacing: 1,
   },
   teamCard: {
-    backgroundColor: '#1a4d3a',
+    backgroundColor: "#1a4d3a",
     borderRadius: 15,
     padding: 15,
   },
   teamHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 15,
   },
   teamLogo: {
@@ -328,32 +400,32 @@ const styles = StyleSheet.create({
   },
   teamName: {
     fontSize: 18,
-    fontFamily: 'Sportypo-Regular',
-    color: '#fff',
+    fontFamily: "Sportypo-Regular",
+    color: "#fff",
     letterSpacing: 1,
   },
   teamCaptain: {
     fontSize: 14,
-    fontFamily: 'LemonMilk-Regular',
-    color: '#888',
+    fontFamily: "LemonMilk-Regular",
+    color: "#888",
     marginTop: 2,
   },
   teamStats: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
   teamStatItem: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   teamStatValue: {
     fontSize: 20,
-    fontFamily: 'LemonMilk-Regular',
-    color: '#ffd700',
+    fontFamily: "LemonMilk-Regular",
+    color: "#ffd700",
   },
   teamStatLabel: {
     fontSize: 12,
-    fontFamily: 'LemonMilk-Regular',
-    color: '#888',
+    fontFamily: "LemonMilk-Regular",
+    color: "#888",
     marginTop: 2,
   },
   menuSection: {
@@ -364,43 +436,43 @@ const styles = StyleSheet.create({
     height: 50,
     marginBottom: 10,
     borderWidth: 2,
-    borderColor: '#ffd700',
-    overflow: 'hidden',
+    borderColor: "#ffd700",
+    overflow: "hidden",
   },
   buttonImage: {
     opacity: 0.3,
   },
   menuTouchable: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     padding: 15,
   },
   menuText: {
     flex: 1,
-    color: '#ffd700',
+    color: "#ffd700",
     fontSize: 16,
-    fontFamily: 'LemonMilk-Regular',
+    fontFamily: "LemonMilk-Regular",
     marginLeft: 15,
-    fontWeight: 'bold',
-    textShadowColor: '#000',
+    fontWeight: "bold",
+    textShadowColor: "#000",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
   },
   logoutButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#d32f2f',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#d32f2f",
     borderRadius: 10,
     padding: 15,
     margin: 20,
     marginTop: 10,
   },
   logoutText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontFamily: 'LemonMilk-Regular',
+    fontFamily: "LemonMilk-Regular",
     marginLeft: 10,
   },
 });
