@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -10,15 +10,15 @@ import {
   Platform,
   ScrollView,
   ImageBackground,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { useAuth } from '../context/AuthContext';
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useAuth } from "../context/AuthContext";
 
-const vectorImage = require('./vector.png');
+const vectorImage = require("./vector.png");
 
 export default function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -26,7 +26,7 @@ export default function LoginScreen({ navigation }) {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert('Error', 'Please fill in all fields');
+      Alert.alert("Error", "Please fill in all fields");
       return;
     }
 
@@ -35,17 +35,17 @@ export default function LoginScreen({ navigation }) {
     setLoading(false);
 
     if (result.success) {
-      setEmail('');
-      setPassword('');
+      setEmail("");
+      setPassword("");
       // Navigation is handled by App.js based on auth state
     } else {
-      Alert.alert('Login Failed', result.error);
+      Alert.alert("Login Failed", result.error);
     }
   };
 
   const handleAdminLogin = async () => {
     if (!email || !password) {
-      Alert.alert('Error', 'Please fill in all fields');
+      Alert.alert("Error", "Please fill in all fields");
       return;
     }
 
@@ -54,16 +54,16 @@ export default function LoginScreen({ navigation }) {
     setLoading(false);
 
     if (result.success) {
-      if (result.user.role !== 'admin') {
-        Alert.alert('Access Denied', 'You do not have admin privileges');
+      if (result.user.role !== "admin") {
+        Alert.alert("Access Denied", "You do not have admin privileges");
         await logout(); // Ensure user is logged out if they tried to admin login with non-admin account
         return;
       }
-      setEmail('');
-      setPassword('');
+      setEmail("");
+      setPassword("");
       // Navigation is handled by App.js based on auth state
     } else {
-      Alert.alert('Admin Login Failed', result.error);
+      Alert.alert("Admin Login Failed", result.error);
     }
   };
 
@@ -71,7 +71,7 @@ export default function LoginScreen({ navigation }) {
     <View style={styles.container}>
       <KeyboardAvoidingView
         style={styles.container}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <View style={styles.header}>
@@ -82,7 +82,12 @@ export default function LoginScreen({ navigation }) {
 
           <View style={styles.form}>
             <View style={styles.inputContainer}>
-              <Ionicons name="mail-outline" size={20} color="#888" style={styles.inputIcon} />
+              <Ionicons
+                name="mail-outline"
+                size={20}
+                color="#888"
+                style={styles.inputIcon}
+              />
               <TextInput
                 style={styles.input}
                 placeholder="Email"
@@ -95,7 +100,12 @@ export default function LoginScreen({ navigation }) {
             </View>
 
             <View style={styles.inputContainer}>
-              <Ionicons name="lock-closed-outline" size={20} color="#888" style={styles.inputIcon} />
+              <Ionicons
+                name="lock-closed-outline"
+                size={20}
+                color="#888"
+                style={styles.inputIcon}
+              />
               <TextInput
                 style={styles.input}
                 placeholder="Password"
@@ -127,17 +137,18 @@ export default function LoginScreen({ navigation }) {
                 imageStyle={styles.imageStyle}
               >
                 <Text style={styles.buttonText}>
-                  {loading ? 'Logging in...' : 'Login'}
+                  {loading ? "Logging in..." : "Login"}
                 </Text>
               </ImageBackground>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.registerLink}
-              onPress={() => navigation.navigate('Register')}
+              onPress={() => navigation.navigate("Register")}
             >
               <Text style={styles.registerText}>
-                Don't have an account? <Text style={styles.registerTextBold}>Sign Up</Text>
+                Don't have an account?{" "}
+                <Text style={styles.registerTextBold}>Sign Up</Text>
               </Text>
             </TouchableOpacity>
 
@@ -157,9 +168,21 @@ export default function LoginScreen({ navigation }) {
                 style={styles.imageBackground}
                 imageStyle={styles.imageStyle}
               >
-                <Ionicons name="shield-checkmark-outline" size={20} color="#000" />
+                <Ionicons
+                  name="shield-checkmark-outline"
+                  size={20}
+                  color="#000"
+                />
                 <Text style={styles.adminButtonText}>Admin Login</Text>
               </ImageBackground>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.logoutButton}
+              onPress={() => navigation.goBack()}
+            >
+              <Ionicons name="arrow-back-outline" size={20} color="#fff" />
+              <Text style={styles.logoutText}>Back</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -171,71 +194,71 @@ export default function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0d2818',
+    backgroundColor: "#0d2818",
   },
   scrollContainer: {
     flexGrow: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     padding: 20,
   },
   header: {
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 40,
   },
   title: {
     fontSize: 32,
-    fontFamily: 'Sportypo-Regular',
-    color: '#fff',
+    fontFamily: "Sportypo-Regular",
+    color: "#fff",
     marginTop: 5,
     letterSpacing: 2,
-    textAlign: 'center',
+    textAlign: "center",
   },
   subtitle: {
     fontSize: 16,
-    fontFamily: 'Montserrat-Regular',
-    color: '#888',
+    fontFamily: "Montserrat-Regular",
+    color: "#888",
     marginTop: 5,
   },
   buttonText: {
-    color: '#ffd700',
+    color: "#ffd700",
     fontSize: 18,
-    fontFamily: 'Montserrat-Regular',
-    fontWeight: 'bold',
-    textShadowColor: '#000',
+    fontFamily: "Montserrat-Regular",
+    fontWeight: "bold",
+    textShadowColor: "#000",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
   },
   registerText: {
-    color: '#888',
+    color: "#888",
     fontSize: 16,
-    fontFamily: 'Montserrat-Regular',
+    fontFamily: "Montserrat-Regular",
   },
   registerTextBold: {
-    color: '#ffd700',
-    fontFamily: 'Montserrat-Regular',
+    color: "#ffd700",
+    fontFamily: "Montserrat-Regular",
   },
   dividerText: {
-    color: '#888',
+    color: "#888",
     fontSize: 14,
-    fontFamily: 'Montserrat-Regular',
+    fontFamily: "Montserrat-Regular",
     marginHorizontal: 15,
   },
   adminButtonText: {
-    color: '#ffd700',
+    color: "#ffd700",
     fontSize: 16,
-    fontFamily: 'Montserrat-Regular',
-    fontWeight: 'bold',
-    textShadowColor: '#000',
+    fontFamily: "Montserrat-Regular",
+    fontWeight: "bold",
+    textShadowColor: "#000",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
   },
   form: {
-    width: '100%',
+    width: "100%",
   },
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#1a4d3a',
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#1a4d3a",
     borderRadius: 10,
     marginBottom: 15,
     paddingHorizontal: 15,
@@ -246,7 +269,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
   },
   eyeIcon: {
@@ -255,54 +278,70 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 10,
     height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 15,
     borderWidth: 2,
-    borderColor: '#ffd700',
-    overflow: 'hidden',
+    borderColor: "#ffd700",
+    overflow: "hidden",
   },
   buttonDisabled: {
     opacity: 0.6,
   },
   registerLink: {
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 20,
     height: 50,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   divider: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 20,
   },
   dividerLine: {
     flex: 1,
     height: 1,
-    backgroundColor: '#888',
+    backgroundColor: "#888",
   },
   adminButton: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 10,
     borderRadius: 10,
     height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 15,
     borderWidth: 2,
-    borderColor: '#ffd700',
-    overflow: 'hidden',
+    borderColor: "#ffd700",
+    overflow: "hidden",
   },
   imageBackground: {
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
   },
   imageStyle: {
     borderRadius: 10,
-    resizeMode: 'cover',
+    resizeMode: "cover",
     opacity: 0.3,
+  },
+  logoutButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#d32f2f",
+    borderRadius: 10,
+    padding: 15,
+    // margin: 20 0,
+    marginTop: 10,
+  },
+  logoutText: {
+    color: "#fff",
+    fontSize: 16,
+    fontFamily: "LemonMilk-Regular",
+    marginLeft: 10,
   },
 });
