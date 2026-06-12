@@ -121,7 +121,7 @@ function AppNavigator() {
         >
           {!user ? (
             <>
-              <Stack.Screen 
+            <Stack.Screen 
                 name="Guest" 
                 component={BookingScreen} 
                 options={{ headerShown: false }}
