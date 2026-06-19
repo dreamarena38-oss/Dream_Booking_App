@@ -18,6 +18,7 @@ import axios from 'axios';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Platform } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function GroundDetailScreen({ route, navigation }) {
   const { ground } = route.params;
@@ -43,7 +44,7 @@ export default function GroundDetailScreen({ route, navigation }) {
       const response = await axios.get(`${API_BASE_URL}/grounds/${ground._id}/reviews`);
       setReviews(response.data);
     } catch (error) {
-      console.error('Error fetching reviews:', error);
+      console.log('Error fetching reviews:', error);
     }
   };
 
@@ -117,7 +118,7 @@ export default function GroundDetailScreen({ route, navigation }) {
   ];
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <Image source={{ uri: ground.image }} style={styles.groundImage} />
         
@@ -385,7 +386,7 @@ export default function GroundDetailScreen({ route, navigation }) {
           </View>
         </Modal>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 

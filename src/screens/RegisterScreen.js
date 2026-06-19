@@ -17,6 +17,7 @@ import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const positions = [
   "Goalkeeper",
@@ -59,7 +60,7 @@ export default function RegisterScreen({ navigation }) {
       const response = await axios.get(`${API_BASE_URL}/teams`);
       setTeams(response.data);
     } catch (error) {
-      // console.error("Error fetching teams:", error);
+      // console.log("Error fetching teams:", error);
       Alert.alert(
         "Error",
         "Failed to load teams. Please check your connection and try again.",
@@ -96,7 +97,7 @@ export default function RegisterScreen({ navigation }) {
         updateFormData("profileImage", base64Image);
       }
     } catch (error) {
-      console.error("Error picking image:", error);
+      console.log("Error picking image:", error);
       Alert.alert("Error", "Failed to pick image. Please try again.");
     }
   };
@@ -144,7 +145,7 @@ export default function RegisterScreen({ navigation }) {
         Alert.alert("Registration Failed", errorMessage);
       }
     } catch (error) {
-      console.error("Registration error:", error);
+      console.log("Registration error:", error);
       Alert.alert(
         "Error",
         "Failed to connect to server. Please check your internet connection.",
@@ -159,7 +160,7 @@ export default function RegisterScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -413,7 +414,7 @@ export default function RegisterScreen({ navigation }) {
       </View>
     </ScrollView>
     </KeyboardAvoidingView>
-    </View>
+    </SafeAreaView>
   );
 }
 

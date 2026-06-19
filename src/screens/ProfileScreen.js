@@ -92,7 +92,7 @@ export default function ProfileScreen() {
         }
       }
     } catch (error) {
-      console.error("Error updating profile photo:", error);
+      console.log("Error updating profile photo:", error);
       Alert.alert("Error", "Failed to update profile photo. Please try again.");
     }
   };
@@ -446,7 +446,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    padding: 15,
+    padding: 10,
   },
   menuText: {
     flex: 1,

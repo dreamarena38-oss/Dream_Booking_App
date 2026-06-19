@@ -12,6 +12,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function BookingScreen({ navigation }) {
   const [grounds, setGrounds] = useState([]);
@@ -29,7 +30,7 @@ export default function BookingScreen({ navigation }) {
       const response = await axios.get(`${API_BASE_URL}/grounds`);
       setGrounds(response.data);
     } catch (error) {
-      console.error("Error fetching grounds:", error);
+      // console.log("Error fetching grounds:", error);
       Alert.alert("Error", "Failed to load grounds");
     } finally {
       setLoading(false);
@@ -123,7 +124,7 @@ export default function BookingScreen({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Available Grounds</Text>
@@ -150,7 +151,7 @@ export default function BookingScreen({ navigation }) {
           }
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
