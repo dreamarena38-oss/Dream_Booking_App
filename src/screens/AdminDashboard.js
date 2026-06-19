@@ -66,7 +66,7 @@ export default function AdminDashboard() {
         updateFormData(field, base64Image);
       }
     } catch (error) {
-      console.error('Error picking image:', error);
+      console.log('Error picking image:', error);
       Alert.alert('Error', 'Failed to pick image');
     }
   };
@@ -96,7 +96,7 @@ export default function AdminDashboard() {
       const response = await axios.get(`${API_BASE_URL}/admin/stats`, config);
       setStats(response.data);
     } catch (error) {
-      console.error('Error fetching stats:', error.response?.data || error.message);
+      console.log('Error fetching stats:', error.response?.data || error.message);
       if (error.response?.status === 403) {
         Alert.alert('Access Denied', 'Admin access required. Please login with valid admin credentials.');
       } else if (error.response?.status === 401) {
@@ -149,7 +149,7 @@ export default function AdminDashboard() {
       });
       setBookings(response.data);
     } catch (error) {
-      console.error('Error fetching bookings:', error);
+      console.log('Error fetching bookings:', error);
       Alert.alert('Error', 'Failed to load bookings');
     }
   };
@@ -162,7 +162,7 @@ export default function AdminDashboard() {
       });
       setTeams(response.data);
     } catch (error) {
-      console.error('Error fetching teams:', error);
+      console.log('Error fetching teams:', error);
       Alert.alert('Error', 'Failed to load teams');
     }
   };
@@ -175,7 +175,7 @@ export default function AdminDashboard() {
       });
       setCustomers(response.data);
     } catch (error) {
-      console.error('Error fetching customers:', error);
+      console.log('Error fetching customers:', error);
       Alert.alert('Error', 'Failed to load customers');
     }
   };
@@ -188,7 +188,7 @@ export default function AdminDashboard() {
       });
       setGrounds(response.data);
     } catch (error) {
-      console.error('Error fetching grounds:', error);
+      console.log('Error fetching grounds:', error);
       Alert.alert('Error', 'Failed to load grounds');
     }
   };
@@ -201,7 +201,7 @@ export default function AdminDashboard() {
       });
       setLeagues(response.data);
     } catch (error) {
-      console.error('Error fetching leagues:', error);
+      console.log('Error fetching leagues:', error);
       Alert.alert('Error', 'Failed to load leagues');
     }
   };
@@ -214,7 +214,7 @@ export default function AdminDashboard() {
       });
       setNews(response.data);
     } catch (error) {
-      console.error('Error fetching news:', error);
+      console.log('Error fetching news:', error);
       Alert.alert('Error', 'Failed to load news');
     }
   };
@@ -329,7 +329,7 @@ export default function AdminDashboard() {
       if (modalType === 'team') fetchTeams();
       if (modalType === 'news') fetchNews();
     } catch (error) {
-      console.error('Error saving item:', error);
+      console.log('Error saving item:', error);
       if (error.response?.status === 403) {
         Alert.alert('Access Denied', 'Admin access required for this operation.');
       } else {
@@ -402,7 +402,7 @@ export default function AdminDashboard() {
             fetchStats();
             Alert.alert('Success', `${type} deleted successfully`);
           } catch (error) {
-            console.error('Error deleting item:', error);
+            console.log('Error deleting item:', error);
             Alert.alert('Error', `Failed to delete ${type}`);
           }
         },

@@ -205,7 +205,7 @@ export const AuthProvider = ({ children }) => {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       }
     } catch (error) {
-      console.error("Error checking auth status:", error);
+      console.log("Error checking auth status:", error);
     } finally {
       setLoading(false);
     }
@@ -229,7 +229,7 @@ export const AuthProvider = ({ children }) => {
 
       return { success: true, user: apiUserData };
     } catch (error) {
-      console.error("Login error:", error.response?.data || error.message);
+      console.log("Login error:", error.response?.data || error.message);
       return {
         success: false,
         error: error.response?.data?.message || "Login failed",
@@ -299,7 +299,7 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
       delete axios.defaults.headers.common["Authorization"];
     } catch (error) {
-      console.error("Error logging out:", error);
+      console.log("Error logging out:", error);
     }
   };
 

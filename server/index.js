@@ -33,7 +33,7 @@ mongoose.connect(process.env.MONGODB_URI)
         seedAdmin();
         seedMockData();
     })
-    .catch(err => console.error('MongoDB connection error:', err));
+    .catch(err => console.log('MongoDB connection error:', err));
 
 // Routes
 app.use('/api/auth', authRoutes);

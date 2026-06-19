@@ -117,7 +117,7 @@ const seedMockData = async () => {
 
         console.log('🌳 Mock data seeding completed!');
     } catch (error) {
-        console.error('❌ Error seeding mock data:', error.message);
+        console.log('❌ Error seeding mock data:', error.message);
     }
 };
 

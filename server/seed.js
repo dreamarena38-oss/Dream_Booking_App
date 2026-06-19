@@ -40,7 +40,7 @@ const seedAdmin = async () => {
 
         process.exit(0);
     } catch (error) {
-        console.error('Error seeding admin:', error);
+        console.log('Error seeding admin:', error);
         process.exit(1);
     }
 };

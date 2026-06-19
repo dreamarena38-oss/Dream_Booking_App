@@ -6,7 +6,7 @@ try {
   console.log('Image path:', image);
 } catch (error) {
   Alert.alert('Error', 'Failed to load image: ' + error.message);
-  console.error('Image require error:', error);
+  console.log('Image require error:', error);
 }
 
 export default {};

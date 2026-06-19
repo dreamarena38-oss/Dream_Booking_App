@@ -18,7 +18,7 @@ const BookingsHistoryScreen = () => {
       const sortedBookings = response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
       setBookings(sortedBookings);
     } catch (error) {
-      console.error('Error fetching bookings:', error);
+      console.log('Error fetching bookings:', error);
     } finally {
       setLoading(false);
       setRefreshing(false);

@@ -51,7 +51,7 @@ export default function SettingsScreen() {
       await AsyncStorage.setItem('darkMode', JSON.stringify(newValue));
       Alert.alert('Settings Updated', `Dark mode ${newValue ? 'enabled' : 'disabled'}`);
     } catch (error) {
-      console.error('Error saving dark mode setting:', error);
+      console.log('Error saving dark mode setting:', error);
     }
   };
 
@@ -62,7 +62,7 @@ export default function SettingsScreen() {
       await AsyncStorage.setItem('notificationsEnabled', JSON.stringify(newValue));
       Alert.alert('Settings Updated', `Notifications ${newValue ? 'enabled' : 'disabled'}`);
     } catch (error) {
-      console.error('Error saving notification setting:', error);
+      console.log('Error saving notification setting:', error);
     }
   };
 
@@ -73,7 +73,7 @@ export default function SettingsScreen() {
       setShowLanguageModal(false);
       Alert.alert('Language Updated', `Language changed to ${language}`);
     } catch (error) {
-      console.error('Error saving language setting:', error);
+      console.log('Error saving language setting:', error);
     }
   };
 
@@ -129,7 +129,7 @@ export default function SettingsScreen() {
               await AsyncStorage.multiRemove(keysToRemove);
               Alert.alert('Success', 'Cache cleared successfully');
             } catch (error) {
-              console.error('Error clearing cache:', error);
+              console.log('Error clearing cache:', error);
               Alert.alert('Error', 'Failed to clear cache');
             }
           }

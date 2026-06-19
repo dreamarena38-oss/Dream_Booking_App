@@ -29,7 +29,7 @@ const seedAdmin = async () => {
             console.log('✅ Mock Admin user created: admin@gmail.com');
         }
     } catch (error) {
-        console.error('❌ Error seeding admin:', error.message);
+        console.log('❌ Error seeding admin:', error.message);
     }
 };
 
