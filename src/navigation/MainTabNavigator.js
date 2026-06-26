@@ -94,7 +94,11 @@ export default function MainTabNavigator() {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Booking" component={BookingScreen} />
+      <Tab.Screen
+        name="Booking"
+        component={BookingScreen}
+        options={{ headerShown: false }}
+      />
       <Tab.Screen
         name="Profile"
         component={ProfileStackScreen}
