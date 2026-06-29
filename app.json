@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.saimashraf.dreamarena",
-      "buildNumber": "2",
+      "buildNumber": "3",
       "infoPlist": {
         "NSLocalNetworkUsageDescription": "Dream Arena needs access to your local network to load the app from the development server while debugging on your device.",
         "NSBonjourServices": [
@@ -41,7 +41,7 @@
         "backgroundColor": "#0d2818"
       },
       "package": "com.saimashraf.dreamarena",
-      "versionCode": 2
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/adaptive-icon.png"

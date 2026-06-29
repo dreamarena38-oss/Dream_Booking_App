@@ -9,10 +9,10 @@ import {
   Alert,
   RefreshControl,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function BookingScreen({ navigation }) {
   const [grounds, setGrounds] = useState([]);
@@ -117,40 +117,39 @@ export default function BookingScreen({ navigation }) {
 
   if (loading) {
     return (
-      <View style={styles.loadingContainer}>
+      <SafeAreaView style={styles.loadingContainer}>
         <Text style={styles.loadingText}>Loading grounds...</Text>
-      </View>
+      </SafeAreaView>
     );
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>Available Grounds</Text>
-          <Text style={styles.headerSubtitle}>
-            Find the perfect ground for your game
-          </Text>
-        </View>
-
-        <FlatList
-          data={grounds}
-          renderItem={({ item, index }) => renderGroundItem(item, index)}
-          keyExtractor={(item, index) => index.toString()}
-          ListEmptyComponent={
-            <View style={styles.emptyContainer}>
-              <Ionicons name="football-outline" size={64} color="#888" />
-              <Text style={styles.emptyText}>No grounds available</Text>
-              <Text style={styles.emptySubtext}>
-                Check back later for new grounds
-              </Text>
-            </View>
-          }
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        />
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Available Grounds</Text>
+        <Text style={styles.headerSubtitle}>
+          Find the perfect ground for your game
+        </Text>
       </View>
+
+      <FlatList
+        data={grounds}
+        renderItem={({ item, index }) => renderGroundItem(item, index)}
+        keyExtractor={(item, index) => index.toString()}
+        contentContainerStyle={styles.listContent}
+        ListEmptyComponent={
+          <View style={styles.emptyContainer}>
+            <Ionicons name="football-outline" size={64} color="#888" />
+            <Text style={styles.emptyText}>No grounds available</Text>
+            <Text style={styles.emptySubtext}>
+              Check back later for new grounds
+            </Text>
+          </View>
+        }
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      />
     </SafeAreaView>
   );
 }
@@ -171,8 +170,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   header: {
-    padding: 20,
-    paddingBottom: 10,
+    paddingHorizontal: 20,
+    paddingBottom: 12,
+  },
+  listContent: {
+    paddingBottom: 16,
   },
   headerTitle: {
     fontSize: 24,
