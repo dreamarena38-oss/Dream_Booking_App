@@ -1,0 +1,28 @@
+workflows:
+  android-apk:
+    name: Dream Arena Android APK
+
+    max_build_duration: 60
+
+    environment:
+      node: 20
+
+      android_signing:
+        - keystore_reference
+
+    scripts:
+      - name: Install npm packages
+        script: |
+          npm install
+
+      - name: Expo prebuild Android
+        script: |
+          npx expo prebuild --platform android --clean
+
+      - name: Build APK
+        script: |
+          cd android
+          ./gradlew assembleRelease
+
+    artifacts:
+      - android/app/build/outputs/apk/release/*.apk
