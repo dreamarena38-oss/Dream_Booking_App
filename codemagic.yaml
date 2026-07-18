@@ -7,9 +7,6 @@ workflows:
     environment:
       node: 20
 
-      android_signing:
-        - keystore_reference
-
     scripts:
       - name: Install npm packages
         script: |
