@@ -16,10 +16,11 @@ workflows:
         script: |
           npx expo prebuild --platform android --clean
 
-      - name: Build APK
-        script: |
-          cd android
-          ./gradlew assembleRelease
+     
+- name: Build Android App Bundle
+  script: |
+    cd android
+    ./gradlew bundleRelease
 
-    artifacts:
-      - android/app/build/outputs/apk/release/*.apk
+artifacts:
+  - android/app/build/outputs/bundle/release/*.aab
