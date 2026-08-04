@@ -1,6 +1,6 @@
 workflows:
-  android-apk:
-    name: Dream Arena Android APK
+  android-aab:
+    name: Dream Arena Android AAB
 
     max_build_duration: 60
 
@@ -16,11 +16,10 @@ workflows:
         script: |
           npx expo prebuild --platform android --clean
 
-     
-- name: Build Android App Bundle
-  script: |
-    cd android
-    ./gradlew bundleRelease
+      - name: Build Android App Bundle
+        script: |
+          cd android
+          ./gradlew bundleRelease
 
-artifacts:
-  - android/app/build/outputs/bundle/release/*.aab
+    artifacts:
+      - android/app/build/outputs/bundle/release/*.aab
