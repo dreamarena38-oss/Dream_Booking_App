@@ -6,6 +6,8 @@ workflows:
 
     environment:
       node: 20
+      android_signing:
+        - dreamarena_keystore
 
     scripts:
       - name: Install npm packages
