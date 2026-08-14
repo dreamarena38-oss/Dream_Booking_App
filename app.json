@@ -41,7 +41,10 @@
         "backgroundColor": "#0d2818"
       },
       "package": "com.saimashraf.dreamarena",
-      "versionCode": 3
+      "versionCode": 3,
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/adaptive-icon.png"
@@ -61,12 +64,15 @@
           "resizeMode": "cover",
           "backgroundColor": "#0d2818"
         }
-      ]
+      ],
+      "@react-native-community/datetimepicker",
+      "expo-font"
     ],
     "extra": {
       "eas": {
-        "projectId": "18cda882-9267-40f4-a293-4f9f1eb9439e"
+        "projectId": "909997ad-5022-4f7a-9cb8-4d4c62529d3d"
       }
-    }
+    },
+    "owner": "ravdev-darting"
   }
 }

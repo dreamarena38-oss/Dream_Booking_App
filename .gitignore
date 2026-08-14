@@ -23,3 +23,11 @@ ios/build/
 android/.gradle/
 android/app/build/
 android/build/
+
+# Android signing credentials
+android/gradle.properties
+android/app/*.jks
+android/app/*.keystore
+
+*.backup
+releases/
